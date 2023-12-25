@@ -1,0 +1,66 @@
+
+.message {
+    display: flex;
+    align-items: flex-start; /* 设置垂直对齐方式，可以是 flex-start、flex-end 或 center */
+    justify-content: flex-end; /* 设置水平对齐方式为右对齐 */
+    text-align: left;/* 设置消息的文本对齐方式为右对齐 */
+    margin-bottom: 13px;/* 设置消息之间的底部间隔，你可以根据需要调整数值 */
+}
+
+.message-span {
+    display: inline-block;/* 设置消息的文本为行内元素 */
+    background-color: #00aaff;/* 设置消息文本的背景颜色为蓝色 */
+    padding: 10px 15px; /* 设置消息文本的内边距，你可以根据需要调整数值 */
+    border-radius: 15px;/* 设置消息文本的圆角半径，你可以根据需要调整数值 */
+    margin-bottom: 10px;/* 设置消息文本之间的底部间隔，你可以根据需要调整数值 */
+}
+
+.avatar {
+    width: 40px; /* 调整头像的宽度 */
+    height: 40px; /* 调整头像的高度 */
+    border-radius: 50%; /* 将头像设为圆形 */
+    margin-left: 10px; /* 调整头像和消息文本之间的间距 */
+    margin-right: 0px; /* 调整头像和消息文本之间的间距 */
+    display: flex;
+    align-items: center;
+}
+
+.message-text {
+    color: #000;/* 设置消息文本的颜色为黑色 */
+    margin-bottom: 5px; /* 调整消息文本和时间戳之间的垂直间距 */
+}
+
+.message-timestamp {
+    color: black;
+    font-size: 3px;/* 设置消息时间戳的字体大小，你可以根据需要调整数值 */
+    margin-left: 1px;/* 设置消息时间戳的左外边距，你可以根据需要调整数值 */
+    position: relative;/* 设置消息时间戳的定位方式为相对定位 */
+    top: 5px; /* 调整时间戳相对于默认位置的垂直偏移 */
+    left: 5px; /* 调整时间戳相对于默认位置的水平偏移 */
+}
+
+/* 右键菜单样式 */
+.context-menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px;
+    display: none;
+    z-index: 100; /* 确保在其他元素之上 */
+  }
+
+  .context-menu-item {
+    cursor: pointer;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+
+  .context-menu-item:hover {
+    background-color: #ddd;
+  }
+
+
