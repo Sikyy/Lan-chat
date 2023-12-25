@@ -92,7 +92,7 @@ body {
 
 /* 输入框样式 */
 #chat-box {
-    font-size: 16px;
+    line-height: 30px; /* 设置行高为文本框的高度 */
     width: 700px;
     min-height: 30px;
     max-height: 200px; /* 设置输入框的最大高度 */

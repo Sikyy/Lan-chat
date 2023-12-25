@@ -4,17 +4,26 @@ var chatBox = document.getElementById('chat-box');
 
 const socket = new WebSocket("ws://" + window.location.host + "/ws");
 
+// 处理 WebSocket 接收到的消息
+socket.addEventListener('message', function (event) {
+    const message = JSON.parse(event.data);
+    handleIncomingMessage(message);
+});
+
 // 添加事件监听器，当输入框内容变化时调整高度
 chatBox.addEventListener('input', function () {
     adjustInputHeight(chatBox);
 });
 
 function adjustInputHeight(inputElement) {
+    var computedStyle = window.getComputedStyle(inputElement);
+    var lineHeight = parseInt(computedStyle.lineHeight, 10);
+
     var lines = inputElement.value.split('\n').length;
-    var newHeight = lines * 20; // 这里的 20 可以根据实际情况调整
+    var newHeight = lines * lineHeight;
 
     // 设置最小和最大高度限制
-    var minHeight = 20; // 最小高度
+    var minHeight = lineHeight; // 最小高度为一行的高度
     var maxHeight = 200; // 最大高度
 
     newHeight = Math.min(maxHeight, Math.max(minHeight, newHeight));
@@ -61,6 +70,9 @@ function sendMessage() {
         newMessage.appendChild(avatarSpan);
         newMessage.classList.add('message'); // 添加新的消息元素样式类
         chatDiv.appendChild(newMessage); // 将消息添加到聊天框中
+
+        // 发送消息到服务器
+        socket.send(JSON.stringify({ type: "message", content: message }));
 
         // 清空输入框
         messageInput.value = '';

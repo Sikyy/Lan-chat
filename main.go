@@ -22,6 +22,11 @@ func main() {
 	router := gin.Default()
 	router.LoadHTMLFiles("index.html")
 
+	// 静态资源处理
+	router.Static("/css", "./css")
+	router.Static("/images", "./images")
+	router.Static("/js", "./js")
+
 	// 首页
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
