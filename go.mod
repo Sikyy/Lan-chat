@@ -1,4 +1,4 @@
-module webchat
+module Lan-chat
 
 go 1.21.3
 

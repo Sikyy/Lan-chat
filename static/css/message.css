@@ -33,7 +33,7 @@
 
 .message-timestamp {
     color: black;
-    font-size: 3px;/* 设置消息时间戳的字体大小，你可以根据需要调整数值 */
+    font-size: 3px;/* 设置消息时间戳的字体大小3px，你可以根据需要调整数值 */
     margin-left: 1px;/* 设置消息时间戳的左外边距，你可以根据需要调整数值 */
     position: relative;/* 设置消息时间戳的定位方式为相对定位 */
     top: 5px; /* 调整时间戳相对于默认位置的垂直偏移 */
