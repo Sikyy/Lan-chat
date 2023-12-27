@@ -110,11 +110,7 @@ func (h *hub) printConnectionCount() {
 	fmt.Printf("当前连接数: %d\n", count)
 }
 
-// 处理连接
 func HandleConnection(conn *websocket.Conn) {
-	// 设置读写超时
-	conn.SetReadDeadline(time.Now().Add(10 * time.Second))
-	conn.SetWriteDeadline(time.Now().Add(10 * time.Second))
 
 	// 设置 Keep-Alive
 	conn.SetPongHandler(func(string) error {
@@ -128,6 +124,7 @@ func HandleConnection(conn *websocket.Conn) {
 	}()
 
 	for {
+
 		var msg Message
 		err := conn.ReadJSON(&msg)
 		if err != nil {
