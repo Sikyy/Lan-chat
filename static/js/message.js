@@ -4,16 +4,47 @@ var chatBox = document.getElementById('chat-box');
 
 const socket = new WebSocket("ws://" + window.location.host + "/ws");
 
-// 处理 WebSocket 接收到的消息
-socket.addEventListener('message', function (event) {
-    const message = JSON.parse(event.data);
-    handleIncomingMessage(message);
+// 处理连接打开事件
+socket.addEventListener('open', (event) => {
+    console.log('WebSocket连接已打开');
 });
+
+// 处理连接关闭事件
+socket.addEventListener('close', (event) => {
+    console.log('WebSocket连接已关闭');
+});
+
+// 处理接收到的消息
+socket.addEventListener('message', (event) => {
+    try {
+        const message = JSON.parse(event.data);
+
+        if (message.type === "connectionCount") {
+            const connectionCountElement = document.getElementById("connectionCount");
+            connectionCountElement.innerText = `当前在线连接数：${message.content}`;
+        } else if (message.type === "userMessage") {
+            // 处理用户发送的消息
+            displayUserMessage(message.content);
+        }
+    } catch (error) {
+        console.error('解析传入消息时出错：', error);
+    }
+});
+
+// 处理错误
+socket.addEventListener('error', (event) => {
+    console.error('WebSocket 发生错误：', event);
+});
+  
 
 // 添加事件监听器，当输入框内容变化时调整高度
 chatBox.addEventListener('input', function () {
     adjustInputHeight(chatBox);
 });
+
+function displayUserMessage(content) {
+    // 在界面上显示用户发送的消息的逻辑
+}
 
 function adjustInputHeight(inputElement) {
     var computedStyle = window.getComputedStyle(inputElement);
@@ -43,7 +74,7 @@ function sendMessage() {
         var avatarImg = document.createElement('img'); // 创建头像图片
 
         // 设置头像
-        avatarImg.src = 'images/avatar.jpg'; // 设置头像图片的路径
+        avatarImg.src = 'static/images/avatar.jpg'; // 设置头像图片的路径
         avatarImg.classList.add('avatar'); // 添加自定义样式类
         avatarSpan.appendChild(avatarImg); // 将头像添加到包装头像的 span 元素中
         avatarSpan.style.userSelect = 'none'; // 不可被选择
