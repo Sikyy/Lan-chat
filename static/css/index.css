@@ -52,6 +52,14 @@ body {
     margin-top: 10px;
   }
 
+#status {
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
 
 #user-buttons {
     display: flex; /* 使用弹性盒模型 */
