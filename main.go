@@ -28,7 +28,7 @@ func main() {
 
 	// 升级到 WebSocket
 	router.GET("/ws", func(c *gin.Context) {
-		conn, err := service.Upgrader.Upgrade(c.Writer, c.Request, nil)
+		conn, err := service.WsUpgrader.Upgrade(c.Writer, c.Request, nil)
 		if err != nil {
 			fmt.Println("升级到 WebSocket 时出错:", err)
 			return

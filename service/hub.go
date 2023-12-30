@@ -42,7 +42,7 @@ func (H *Hub) RunHub() {
 			H.c[c] = true                          // 将连接状态设置为 true，表示连接已建立
 			c.data.Ip = c.ws.RemoteAddr().String() // 获取连接的远程地址，并设置到连接数据中的 Ip 字段
 			c.data.Type = "handshake"              // 设置连接数据的类型为 "handshake"
-			c.data.UserList = User_list            // 将全局的 User_list 设置到连接数据中的 UserList 字段
+			c.data.UserList = User_list            // 获取用户列表，并设置到连接数据中的 UserList 字段
 			data_b, _ := json.Marshal(c.data)      // 将连接数据转换为 JSON 格式
 			c.sc <- data_b                         // 将 JSON 数据发送到连接的消息通道
 			printConnectionCount()                 // 打印当前连接数

@@ -10,17 +10,13 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-// upgrader 用于升级 HTTP 连接到 WebSocket 连接
-var (
-	Upgrader = &websocket.Upgrader{
-		ReadBufferSize:  1024,
-		WriteBufferSize: 1024,
-		CheckOrigin: func(r *http.Request) bool {
-			return true
-		},
-		HandshakeTimeout: 10 * time.Second, // 设置握手超时
-	}
-)
+var WsUpgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
+}
 
 // connection结构体 用于保存每个连接的信息
 type connection struct {
