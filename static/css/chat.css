@@ -1,0 +1,148 @@
+/* 聊天标题样式 */
+h2 {
+    font-family: 'Roboto', sans-serif; /* 字体 */
+    font-weight: 300; /* 字体粗细 */
+    font-size: 40px; /* 字体大小 */
+    color: #FFFFFF; /* 字体颜色 */
+    margin: 0; /* 重置外边距 */
+    padding: 0; /* 重置内边距 */
+}
+
+/* 重置默认的页面样式 */
+body {
+    margin: 0; /* 重置外边距 */
+    padding: 0; /* 重置内边距 */
+}
+
+/* 整体页面容器 */
+#allpage {
+    background-color: #f5f4f1; /* 背景颜色 */
+    height: 100vh; /* 设置高度为视窗的100% */
+    width: 100%; /* 宽度100% */
+}
+
+/* 用户页面容器--左侧页面 */
+#user-page {
+    background-color: #f5f4f1; /* 背景颜色 */
+    width: 17%; /* 宽度占比 */
+    height: 100vh; /* 设置高度为视窗的100% */
+    float: left; /* 左浮动 */
+    box-sizing: border-box; /* 包含边框和内边距在内的盒模型 */
+}
+
+#user-profile {
+    display: flex; /* 使用弹性盒模型 */
+    flex-direction: column; /* 纵向排列子元素 */
+    justify-content: center; /* 在纵向居中 */
+    align-items: center; /* 在横向居中 */
+    margin-top: 50px; /* 顶部外边距 */
+    margin-bottom: 50px; /* 底部外边距 */
+}
+
+#user-profile img {
+    width: 140px; /* 根据需要调整头像的宽度 */
+    height: 140px; /* 根据需要调整头像的高度 */
+    border-radius: 50%; /* 将图片样式设为圆形 */
+}
+
+#username {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+
+#user-buttons {
+    display: flex; /* 使用弹性盒模型 */
+    flex-direction: column; /* 纵向排列子元素 */
+    justify-content: center; /* 在纵向居中 */
+    align-items: center; /* 在横向居中 */
+    margin-top: 150px; /* 顶部外边距 */
+    margin-bottom: 50px; /* 底部外边距 */
+}
+
+.button-list {
+    width: 250px; /* 根据需要调整按钮的宽度 */
+    height: 50px; /* 根据需要调整按钮的高度 */
+    background-color: lightgray; /* 根据需要调整按钮的颜色 */
+    border-radius: 20px; /* 设置圆角，可根据需要调整 */
+    margin-bottom: 35px; /* 按钮之间添加一些间距 */
+}
+
+/* 聊天页面容器--右侧页面 */
+#chat-page {
+    background-color: #18222D; /* 背景颜色 */
+    width: 83%; /* 宽度占比 */
+    height: 100vh; /* 设置高度为视窗的100% */
+    float: left; /* 左浮动 */
+    display: flex; /* 使用弹性盒模型 */
+    flex-direction: column; /* 纵向排列子元素 */
+    justify-content: center; /* 在纵向居中 */
+    align-items: center; /* 在横向居中 */
+}
+
+
+/* 输入框容器样式 */
+#chat-input {
+    display: flex; /* 使用弹性盒模型 */
+    margin-top: auto; /* 顶部外边距设为auto以推到底部 */
+    margin-bottom: 35px; /* 输入框容器底部边距 */
+}
+
+/* 输入框样式 */
+#chat-box {
+    line-height: 30px; /* 设置行高为文本框的高度 */
+    width: 700px;
+    min-height: 30px;
+    max-height: 200px; /* 设置输入框的最大高度 */
+    padding: 10px;
+    border: 3px solid #ccc;
+    border-radius: 20px;
+    transition: border-color 0.5s;
+    white-space: pre-wrap;
+    outline: none;
+    resize: none;
+    overflow-y: auto; /* 显示垂直滚动条 */
+
+    
+}
+
+#chat {
+  margin-top: 50px; /* 设置与顶部的间距，可根据需要调整 */
+  border: 3px solid #000; /* 边框为黑色，可根据需要调整 */
+  background-color: #f2f2f2; /* 背景色，可根据需要调整 */
+  padding: 20px; /* 设置内边距，使内容不紧贴边缘 */
+  border-radius: 20px; /* 设置圆角，可根据需要调整 */
+  width: 85%; /* 设置聊天框宽度为页面宽度的85%，可根据需要调整 */
+  height: 550px; /* 设置聊天框高度，可根据需要调整 */
+  overflow-y: auto; /* 添加滚动条，以便内容溢出时可以滚动 */
+  
+}
+
+/* 输入框悬停样式和点击样式 */
+#chat-box:hover, #chat-box:focus {
+  border-color: #333; /* 鼠标悬停或输入框获得焦点时的边框颜色 */
+}
+
+/* 发送按钮样式 */
+#send {
+    background-color: #E6E6E6; /* 输入框背景颜色 */
+    border: none; /* 无边框 */
+    padding: 10px; /* 调整按钮的内边距 */
+    cursor: pointer; /* 鼠标指针样式 */
+    transition: background-color 0.3s; /* 添加颜色过渡效果 */
+    border-radius: 45px; /* 圆角边框 */
+}
+
+/* 发送按钮悬停样式 */
+#send:hover {
+    background-color: #your_hover_color; /* 鼠标移动到按钮上时的颜色 */
+}
+
+/* 如果 SVG 图标需要调整大小，可以在这里设置 */
+#send svg {
+    width: 20px; /* 根据需要设置宽度 */
+    height: 20px; /* 根据需要设置高度 */
+    margin-right: 5px; /* 图标与文本之间的间距 */
+}

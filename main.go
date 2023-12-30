@@ -23,7 +23,7 @@ func main() {
 
 	// 首页
 	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", nil)
+		c.HTML(http.StatusOK, "home.html", nil)
 	})
 
 	// 升级到 WebSocket
@@ -34,11 +34,16 @@ func main() {
 			return
 		}
 
-		// 将客户端保存到 clients 中
-		service.Clients[conn] = struct{}{}
-
 		// 用协程处理连接，传递连接信息
 		go service.HandleConnection(conn)
+	})
+
+	router.GET("/chat", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "chat.html", nil)
+	})
+
+	router.GET("/login", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "login.html", nil)
 	})
 
 	// 启动服务

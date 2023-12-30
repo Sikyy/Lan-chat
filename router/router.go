@@ -8,7 +8,7 @@ import (
 
 func Rrouter() {
 	//启动hub，监听各个通道的数据
-	service.RunHub()
+	service.H.RunHub()
 
 	//创建路由
 	r := gin.Default()
