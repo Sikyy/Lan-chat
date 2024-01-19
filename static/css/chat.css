@@ -50,6 +50,17 @@ body {
     font-weight: bold;
     text-align: center;
     margin-top: 10px;
+}
+
+#stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10px; /* 可根据需要调整高度 */
+  }
+  
+  #online-status {
+    text-align: center;
   }
 
 

@@ -31,11 +31,6 @@ func (H *Hub) RunHub() {
 	ticker := time.NewTicker(5 * time.Second)
 	defer ticker.Stop()
 
-	printConnectionCount := func() {
-		count := len(H.c)
-		fmt.Printf("当前连接数：%d\n", count)
-	}
-
 	for {
 		select {
 		case c := <-H.r: // 有新连接加入
@@ -45,12 +40,10 @@ func (H *Hub) RunHub() {
 			c.data.UserList = User_list            // 获取用户列表，并设置到连接数据中的 UserList 字段
 			data_b, _ := json.Marshal(c.data)      // 将连接数据转换为 JSON 格式
 			c.sc <- data_b                         // 将 JSON 数据发送到连接的消息通道
-			printConnectionCount()                 // 打印当前连接数
 		case c := <-H.u: // 有连接断开
 			if _, ok := H.c[c]; ok {
 				delete(H.c, c)
 				close(c.sc)
-				printConnectionCount()
 			}
 		case data := <-H.b: // 有消息广播
 			for c := range H.c {
@@ -59,12 +52,9 @@ func (H *Hub) RunHub() {
 				default:
 					delete(H.c, c)
 					close(c.sc)
-					printConnectionCount()
 				}
 			}
-		case <-ticker.C:
-			// 每五秒触发一次的统计和打印操作
-			printConnectionCount()
+
 		}
 	}
 }

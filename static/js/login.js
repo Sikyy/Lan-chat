@@ -1,16 +1,39 @@
 // login.js
 
 function handleLogin(event) {
-    event.preventDefault(); // 阻止表单默认提交行为
-  
-    var username = document.getElementById('username').value;
-    console.log('Username:', username); // 添加调试输出
-  
-    // 处理登录逻辑，例如将用户名保存到本地存储
-    localStorage.setItem('username', username);
-  
-    // 使用前端路由进行跳转
-    // 假设使用的是 "/chat" 作为聊天界面的路由
-    window.location.href = "/chat";
-  }
-  
+  event.preventDefault();
+
+  var username = document.getElementById('username').value;
+
+  var requestBody = {
+    username: username,
+    setname: "people",
+  };
+
+  fetch(`http://localhost:8000/login/${username}`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log('Response from server:', data);
+
+      if (data.success) {
+          console.log(`用户 ${username} 登录成功，集合 ${requestBody.setname} 内已录入`);
+          
+          // 更新本地存储中的用户名
+          localStorage.setItem('username', username);
+
+          // 页面跳转逻辑放在这里
+          window.location.href = "/chat";
+      } else {
+          console.error('用户登录失败:', data.message);
+      }
+  })
+  .catch(error => {
+      console.error('Error during login:', error);
+  });
+}

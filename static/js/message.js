@@ -68,6 +68,10 @@ function sendMessage() {
         // 发送消息到服务器
         socket.send(JSON.stringify({ type: "message", content: message }));
 
+        // 发送消息到服务器的 API
+        sendToServerAPI(message);
+
+
         // 清空输入框
         messageInput.value = '';
 
@@ -89,6 +93,41 @@ function sendMessage() {
         // 滚动聊天框到底部
         chatDiv.scrollTop = chatDiv.scrollHeight;
     }
+}
+
+function sendToServerAPI(message) {
+    // var username = localStorage.getItem('username'); // 获取用户名，你可能需要根据实际情况获取
+    var requestBody = {
+        topic: "chat",
+        message: message
+    };
+
+    // 发送 POST 请求到后端 API
+    fetch(`http://localhost:8000/sendMessage`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // 处理后端返回的数据
+        console.log('Response from server:', data);
+
+        // 根据后端返回的数据进行逻辑处理
+        if (data.success) {
+            // 消息成功发送到服务器的 API
+            console.log('消息成功发送到服务器的 API');
+        } else {
+            // 消息发送到服务器的 API 失败
+            console.error('消息发送到服务器的 API 失败:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error during sending message to server API:', error);
+        // 处理消息发送到服务器的 API 失败的逻辑
+    });
 }
 
 // 处理键盘按下事件的函数
