@@ -44,7 +44,7 @@ func HandleConnection(conn *websocket.Conn) {
 
 	// 创建 connection 实例，用于管理该 WebSocket 连接的信息
 	c := &connection{sc: make(chan []byte, 256), ws: conn, data: &data.Data{}}
-	H.r <- c
+	H.register <- c
 
 	// 启动 connection 的写入和读取协程
 	go c.writer()
@@ -58,8 +58,8 @@ func HandleConnection(conn *websocket.Conn) {
 		c.data.UserList = User_list
 		c.data.Content = c.data.User
 		data_b, _ := json.Marshal(c.data)
-		H.b <- data_b
-		H.r <- c
+		H.broadcast <- data_b
+		H.register <- c
 	}()
 }
 
@@ -73,43 +73,43 @@ func (c *connection) writer() {
 	c.ws.Close()
 }
 
-// reader 方法用于从 WebSocket 连接读取消息
+// reader 方法用于从 WebSocket 连接读取消息reader
 func (c *connection) reader() {
+	defer func() {
+		H.unregister <- c
+		c.ws.Close()
+	}()
+
 	for {
-		// 从 WebSocket 连接中读取消息
-		_, message, err := c.ws.ReadMessage()
+		_, rawMessage, err := c.ws.ReadMessage()
 		if err != nil {
-			// 发生错误时，将 connection 加入到 hub 的注册通道中，以便清理资源
-			H.r <- c
 			break
 		}
 
-		// 解析消息并根据消息类型执行相应的操作
-		json.Unmarshal(message, &c.data)
-		switch c.data.Type {
-		case "login":
-			// 处理用户登录消息
-			c.data.User = c.data.Content
-			c.data.From = c.data.User
-			User_list = append(User_list, c.data.User)
-			c.data.UserList = User_list
-			data_b, _ := json.Marshal(c.data)
-			H.b <- data_b
-		case "user":
-			// 处理用户发送的普通消息
-			c.data.Type = "user"
-			data_b, _ := json.Marshal(c.data)
-			H.b <- data_b
-		case "logout":
-			// 处理用户注销消息
-			c.data.Type = "logout"
-			User_list = del(User_list, c.data.User)
-			data_b, _ := json.Marshal(c.data)
-			H.b <- data_b
-			H.r <- c
-		default:
-			// 处理其他未知类型的消息
-			fmt.Print("========default================")
+		var msg map[string]interface{}
+		if err := json.Unmarshal(rawMessage, &msg); err != nil {
+			// 处理解析错误
+			continue
+		}
+
+		messageType, ok := msg["type"].(string)
+		if !ok {
+			// 处理缺少类型字段的错误
+			continue
+		}
+
+		content, ok := msg["content"].(string)
+		if !ok {
+			// 处理缺少内容字段的错误
+			continue
+		}
+
+		switch messageType {
+		case "message":
+			// 在这里处理收到的消息，例如广播给其他连接
+			H.broadcast <- []byte(fmt.Sprintf("siky: %s", content))
+			H.message <- fmt.Sprintf("siky: %s", content)
+			// 添加其他消息类型的处理
 		}
 	}
 }
@@ -134,4 +134,21 @@ func del(slice []string, user string) []string {
 	}
 	fmt.Println(n_slice)
 	return n_slice
+}
+
+// 广播接收到的消息给其他客户端
+func BroadcastMessage(message []byte) {
+	for c := range H.connections {
+		select {
+		case c.sc <- message:
+		default:
+			delete(H.connections, c)
+			close(c.sc)
+		}
+	}
+}
+
+func (h *Hub) HandleMessage(message string) {
+	// 在这里处理收到的消息，这里简单地打印消息内容
+	fmt.Println("Received message:", message)
 }
