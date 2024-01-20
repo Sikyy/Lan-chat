@@ -26,6 +26,11 @@ func main() {
 		c.HTML(http.StatusOK, "home.html", nil)
 	})
 
+	router.GET("/connectionCount", func(c *gin.Context) {
+		count := service.H.GetConnectionCount()
+		c.JSON(http.StatusOK, gin.H{"connectionCount": count})
+	})
+
 	// 升级到 WebSocket
 	router.GET("/ws", func(c *gin.Context) {
 		conn, err := service.WsUpgrader.Upgrade(c.Writer, c.Request, nil)
@@ -48,4 +53,5 @@ func main() {
 
 	// 启动服务
 	router.Run("0.0.0.0:8880")
+
 }

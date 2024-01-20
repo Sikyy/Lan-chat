@@ -1,6 +1,7 @@
 //实现发送消息的功能
 var isComposing = false;
 var chatBox = document.getElementById('chat-box');
+var username = localStorage.getItem('username') || 'DefaultUsername';
 
   
 
@@ -66,7 +67,7 @@ function sendMessage() {
         chatDiv.appendChild(newMessage); // 将消息添加到聊天框中
 
         // 发送消息到服务器
-        socket.send(JSON.stringify({ type: "message", content: message }));
+        socket.send(JSON.stringify({ type: "message", content: message, username: username }));
 
         // 发送消息到服务器的 API
         sendToServerAPI(message);

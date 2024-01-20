@@ -104,12 +104,20 @@ func (c *connection) reader() {
 			continue
 		}
 
+		username, ok := msg["username"].(string)
+		if !ok {
+			// 处理缺少用户名字段的错误
+			continue
+		}
+
 		switch messageType {
 		case "message":
 			// 在这里处理收到的消息，例如广播给其他连接
-			H.broadcast <- []byte(fmt.Sprintf("siky: %s", content))
-			H.message <- fmt.Sprintf("siky: %s", content)
-			// 添加其他消息类型的处理
+			broadcastMessage := fmt.Sprintf("广播消息：%s: %s", username, content)
+			// 将消息类型设置为 "broadcast"
+			H.broadcast <- []byte(fmt.Sprintf(`{"type": "broadcast", "content": "%s", "username": "%s" }`, broadcastMessage, username))
+			//打印消息
+			H.message <- fmt.Sprintf("%s: %s", username, content)
 		}
 	}
 }
@@ -134,18 +142,6 @@ func del(slice []string, user string) []string {
 	}
 	fmt.Println(n_slice)
 	return n_slice
-}
-
-// 广播接收到的消息给其他客户端
-func BroadcastMessage(message []byte) {
-	for c := range H.connections {
-		select {
-		case c.sc <- message:
-		default:
-			delete(H.connections, c)
-			close(c.sc)
-		}
-	}
 }
 
 func (h *Hub) HandleMessage(message string) {

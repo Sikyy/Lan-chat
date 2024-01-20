@@ -18,7 +18,7 @@ socket.addEventListener('message', (event) => {
         if (message.type === "connectionCount") {
             const connectionCountElement = document.getElementById("connectionCount");
             connectionCountElement.innerText = `当前在线连接数：${message.content}`;
-        } else if (message.type === "message" && message.channel === "chat") {
+        } else if (message.type === "broadcast") {
             // 处理 chat 频道中的消息
             displayReceivedMessage(message.content);
         } else {
@@ -26,6 +26,7 @@ socket.addEventListener('message', (event) => {
         }
     } catch (error) {
         console.error('解析传入消息时出错：', error);
+        console.log('接收到的消息内容：', event.data);
     }
 });
 

@@ -1,8 +1,6 @@
 package service
 
-import (
-	"encoding/json"
-)
+import "fmt"
 
 // 初始化 Hub
 var H = Hub{
@@ -29,18 +27,15 @@ func (H *Hub) RunHub() {
 	for {
 		select {
 		case c := <-H.register: // 有新连接加入
-			H.connections[c] = true                // 将连接状态设置为 true，表示连接已建立
-			c.data.Ip = c.ws.RemoteAddr().String() // 获取连接的远程地址，并设置到连接数据中的 Ip 字段
-			c.data.Type = "handshake"              // 设置连接数据的类型为 "handshake"
-			c.data.UserList = User_list            // 获取用户列表，并设置到连接数据中的 UserList 字段
-			data_b, _ := json.Marshal(c.data)      // 将连接数据转换为 JSON 格式
-			c.sc <- data_b                         // 将 JSON 数据发送到连接的消息通道
+			H.connections[c] = true // 将连接状态设置为 true，表示连接已建立
+
 		case c := <-H.unregister: // 有连接断开
 			if _, ok := H.connections[c]; ok {
 				delete(H.connections, c) // 从连接映射表中删除连接
 				close(c.sc)              // 关闭连接的消息通道
 			}
 		case data := <-H.broadcast: // 有消息广播
+			fmt.Println("Broadcasting message:", string(data))
 			for c := range H.connections { // 遍历连接映射表
 				select {
 				case c.sc <- data: // 将消息发送到连接的消息通道
@@ -60,4 +55,9 @@ func (H *Hub) RunHub() {
 // 启动 Hub 运行的函数
 func RunHub() {
 	go H.RunHub()
+}
+
+// GetConnectionCount 返回当前连接数量
+func (h *Hub) GetConnectionCount() int {
+	return len(h.connections)
 }
