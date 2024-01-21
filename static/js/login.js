@@ -10,7 +10,7 @@ function handleLogin(event) {
     setname: "people",
   };
 
-  fetch(`http://localhost:8000/login/${username}`, {
+  fetch(`http://192.168.50.7:8000/login/${username}`, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',

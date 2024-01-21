@@ -7,6 +7,15 @@
     margin-bottom: 13px;/* 设置消息之间的底部间隔，你可以根据需要调整数值 */
 }
 
+.message-left {
+    display: flex;
+    align-items: flex-start; /* 设置垂直对齐方式，可以是 flex-start、flex-end 或 center */
+    justify-content: flex-start; /* 设置水平对齐方式为左对齐 */
+    text-align: left;/* 设置消息的文本对齐方式为左对齐 */
+    margin-bottom: 13px;/* 设置消息之间的底部间隔，你可以根据需要调整数值 */
+}
+
+
 .message-span {
     display: inline-block;/* 设置消息的文本为行内元素 */
     background-color: #00aaff;/* 设置消息文本的背景颜色为蓝色 */
@@ -22,6 +31,26 @@
     border-radius: 50%; /* 将头像设为圆形 */
     margin-left: 10px; /* 调整头像和消息文本之间的间距 */
     margin-right: 0px; /* 调整头像和消息文本之间的间距 */
+    display: flex;
+    align-items: center;
+}
+
+.avatar-left {
+    width: 40px; /* 调整头像的宽度 */
+    height: 40px; /* 调整头像的高度 */
+    border-radius: 50%; /* 将头像设为圆形 */
+    margin-left: 0px; /* 调整头像和消息文本之间的间距 */
+    margin-right: 10px; /* 调整头像和消息文本之间的间距 */
+    display: flex;
+    align-items: center;
+}
+
+.avatar-left {
+    width: 40px; /* 调整头像的宽度 */
+    height: 40px; /* 调整头像的高度 */
+    border-radius: 50%; /* 将头像设为圆形 */
+    margin-left: 0px; /* 调整头像和消息文本之间的间距 */
+    margin-right: 10px; /* 调整头像和消息文本之间的间距 */
     display: flex;
     align-items: center;
 }

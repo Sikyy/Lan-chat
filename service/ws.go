@@ -53,13 +53,12 @@ func HandleConnection(conn *websocket.Conn) {
 	// 在连接关闭时执行清理操作
 	defer func() {
 		// 向服务器发送注销消息
-		c.data.Type = "logout"
-		User_list = del(User_list, c.data.User)
-		c.data.UserList = User_list
-		c.data.Content = c.data.User
-		data_b, _ := json.Marshal(c.data)
-		H.broadcast <- data_b
-		H.register <- c
+		// c.data.Type = "logout"
+		// User_list = del(User_list, c.data.User)
+		// c.data.UserList = User_list
+		// c.data.Content = c.data.User
+		// data_b, _ := json.Marshal(c.data)
+		// H.broadcast <- data_b //广播注销消息，如果通道已经关闭会导致panic，程序崩溃
 	}()
 }
 
@@ -114,35 +113,42 @@ func (c *connection) reader() {
 		case "message":
 			// 在这里处理收到的消息，例如广播给其他连接
 			broadcastMessage := fmt.Sprintf("广播消息：%s: %s", username, content)
+			//获取发送方的地址
+			SenderIP := c.ws.RemoteAddr().String()
 			// 将消息类型设置为 "broadcast"
-			H.broadcast <- []byte(fmt.Sprintf(`{"type": "broadcast", "content": "%s", "username": "%s" }`, broadcastMessage, username))
+			H.broadcast <- []byte(fmt.Sprintf(`{"type": "broadcast", "content": "%s", "username": "%s","senderIP": "%s"}`, broadcastMessage, username, SenderIP))
 			//打印消息
 			H.message <- fmt.Sprintf("%s: %s", username, content)
+		case "unregister":
+			// 在这里处理收到的消息
+			//发送连接断开给连接断开通道
+			H.unregister <- c
+
 		}
 	}
 }
 
 // del 方法用于从切片中删除指定的元素
-func del(slice []string, user string) []string {
-	count := len(slice)
-	if count == 0 {
-		return slice
-	}
-	if count == 1 && slice[0] == user {
-		return []string{}
-	}
-	var n_slice = []string{}
-	for i := range slice {
-		if slice[i] == user && i == count {
-			return slice[:count]
-		} else if slice[i] == user {
-			n_slice = append(slice[:i], slice[i+1:]...)
-			break
-		}
-	}
-	fmt.Println(n_slice)
-	return n_slice
-}
+// func del(slice []string, user string) []string {
+// 	count := len(slice)
+// 	if count == 0 {
+// 		return slice
+// 	}
+// 	if count == 1 && slice[0] == user {
+// 		return []string{}
+// 	}
+// 	var n_slice = []string{}
+// 	for i := range slice {
+// 		if slice[i] == user && i == count {
+// 			return slice[:count]
+// 		} else if slice[i] == user {
+// 			n_slice = append(slice[:i], slice[i+1:]...)
+// 			break
+// 		}
+// 	}
+// 	fmt.Println(n_slice)
+// 	return n_slice
+// }
 
 func (h *Hub) HandleMessage(message string) {
 	// 在这里处理收到的消息，这里简单地打印消息内容

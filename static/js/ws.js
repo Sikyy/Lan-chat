@@ -44,8 +44,8 @@ function displayReceivedMessage(message) {
 
     // 设置头像
     avatarImg.src = 'static/images/avatar.jpg';
-    avatarImg.classList.add('avatar');
-    avatarSpan.appendChild(avatarImg);
+    avatarImg.classList.add('avatar-left');// 添加自定义样式类
+    avatarSpan.appendChild(avatarImg); // 将头像添加到包装头像的 span 元素中
     avatarSpan.style.userSelect = 'none';
 
     // 创建 span 元素用于包装消息文本
@@ -64,9 +64,9 @@ function displayReceivedMessage(message) {
     spanMessage.appendChild(messageText);
     spanMessage.appendChild(timestampSpan);
     spanMessage.classList.add('message-span');
-    newMessage.appendChild(spanMessage);
     newMessage.appendChild(avatarSpan);
-    newMessage.classList.add('message');
+    newMessage.appendChild(spanMessage);
+    newMessage.classList.add('message-left');
     chatDiv.appendChild(newMessage);
 
     // 滚动聊天框到底部

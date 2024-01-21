@@ -13,7 +13,7 @@ var requestBody = {
 
 // 定期获取连接数
 function fetchConnectionCount() {
-    fetch(`http://localhost:8000/getSetPeopleNum`, {
+    fetch(`http://192.168.50.7:8000/getSetPeopleNum`, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
