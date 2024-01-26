@@ -23,7 +23,7 @@ func main() {
 
 	// 首页
 	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "home.html", nil)
+		c.HTML(http.StatusOK, "login.html", nil)
 	})
 
 	router.GET("/connectionCount", func(c *gin.Context) {
@@ -47,9 +47,9 @@ func main() {
 		c.HTML(http.StatusOK, "chat.html", nil)
 	})
 
-	router.GET("/login", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "login.html", nil)
-	})
+	// router.GET("/login", func(c *gin.Context) {
+	// 	c.HTML(http.StatusOK, "login.html", nil)
+	// })
 
 	// 启动服务
 	router.Run("0.0.0.0:8880")

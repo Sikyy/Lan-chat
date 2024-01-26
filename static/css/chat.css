@@ -1,3 +1,9 @@
+html, body {
+    height: 100%; /* 设置高度为视窗的100% */
+    margin: 0; /* 重置外边距 */
+    padding: 0; /* 重置内边距 */
+}
+
 /* 聊天标题样式 */
 h2 {
     font-family: 'Roboto', sans-serif; /* 字体 */
@@ -8,16 +14,10 @@ h2 {
     padding: 0; /* 重置内边距 */
 }
 
-/* 重置默认的页面样式 */
-body {
-    margin: 0; /* 重置外边距 */
-    padding: 0; /* 重置内边距 */
-}
-
 /* 整体页面容器 */
 #allpage {
     background-color: #f5f4f1; /* 背景颜色 */
-    height: 100vh; /* 设置高度为视窗的100% */
+    height: inherit; /* 设置高度为视窗的100% */
     width: 100%; /* 宽度100% */
 }
 
@@ -25,7 +25,7 @@ body {
 #user-page {
     background-color: #f5f4f1; /* 背景颜色 */
     width: 17%; /* 宽度占比 */
-    height: 100vh; /* 设置高度为视窗的100% */
+    height: inherit; /* 设置高度为视窗的100% */
     float: left; /* 左浮动 */
     box-sizing: border-box; /* 包含边框和内边距在内的盒模型 */
 }
@@ -85,7 +85,7 @@ body {
 #chat-page {
     background-color: #18222D; /* 背景颜色 */
     width: 83%; /* 宽度占比 */
-    height: 100vh; /* 设置高度为视窗的100% */
+    height: inherit; /* 设置高度为视窗的100% */
     float: left; /* 左浮动 */
     display: flex; /* 使用弹性盒模型 */
     flex-direction: column; /* 纵向排列子元素 */
@@ -97,16 +97,13 @@ body {
 /* 输入框容器样式 */
 #chat-input {
     display: flex; /* 使用弹性盒模型 */
-    margin-top: auto; /* 顶部外边距设为auto以推到底部 */
-    margin-bottom: 35px; /* 输入框容器底部边距 */
+    margin: 30px 0;
 }
 
 /* 输入框样式 */
 #chat-box {
-    line-height: 30px; /* 设置行高为文本框的高度 */
     width: 700px;
-    min-height: 30px;
-    max-height: 200px; /* 设置输入框的最大高度 */
+    height: 30px;
     padding: 10px;
     border: 3px solid #ccc;
     border-radius: 20px;
@@ -114,7 +111,7 @@ body {
     white-space: pre-wrap;
     outline: none;
     resize: none;
-    overflow-y: auto; /* 显示垂直滚动条 */
+    line-height: 30px;
 
     
 }

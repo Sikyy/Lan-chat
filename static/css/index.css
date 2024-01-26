@@ -1,3 +1,9 @@
+html {
+    padding: 0; /* 重置内边距 */
+    margin: 0; /* 重置外边距 */
+    height: 100%; /* 设置高度为视窗的100% */
+}
+
 /* 聊天标题样式 */
 h2 {
     font-family: 'Roboto', sans-serif; /* 字体 */
@@ -12,6 +18,7 @@ h2 {
 body {
     margin: 0; /* 重置外边距 */
     padding: 0; /* 重置内边距 */
+    height: 100%; /* 设置高度为视窗的100% */
 }
 
 /* 整体页面容器 */
