@@ -119,6 +119,9 @@ func (c *connection) reader() {
 			H.broadcast <- []byte(fmt.Sprintf(`{"type": "broadcast", "content": "%s", "username": "%s","senderIP": "%s"}`, broadcastMessage, username, SenderIP))
 			//打印消息
 			H.message <- fmt.Sprintf("%s: %s", username, content)
+		// case "logout":
+		// 	// 在这里处理收到的消息，不需要广播给其他连接，只需要给redis发送注销消息
+
 		case "unregister":
 			// 在这里处理收到的消息
 			//发送连接断开给连接断开通道

@@ -3,7 +3,6 @@ var isComposing = false;
 var chatBox = document.getElementById('chat-box');
 var username = localStorage.getItem('username') || 'DefaultUsername';
 
-  
 
 // 添加事件监听器，当输入框内容变化时调整高度
 chatBox.addEventListener('input', function () {
@@ -95,6 +94,7 @@ function sendMessage() {
         chatDiv.scrollTop = chatDiv.scrollHeight;
     }
 }
+
 
 function sendToServerAPI(message) {
     // var username = localStorage.getItem('username'); // 获取用户名，你可能需要根据实际情况获取

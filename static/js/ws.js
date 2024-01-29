@@ -1,11 +1,19 @@
 const socket = new WebSocket("ws://" + window.location.host + "/ws");
 
+window.addEventListener('unload', function (event) {//unload，beforeunload
+    // 阻止默认的关闭行为，以便有时间完成请求
+    event.preventDefault();
+  
+    // 发送退出请求，不关心响应
+    logout();
+  });
+
 // 处理连接打开事件
 socket.addEventListener('open', (event) => {
     console.log('WebSocket连接已打开');
+    console.log('username:'+ localStorage.getItem('username'));
 });
 
-// 处理连接关闭事件
 socket.addEventListener('close', (event) => {
     console.log('WebSocket连接已关闭');
 });
@@ -72,3 +80,35 @@ function displayReceivedMessage(message) {
     // 滚动聊天框到底部
     chatDiv.scrollTop = chatDiv.scrollHeight;
 }
+
+
+function logout() {
+    var username = localStorage.getItem('username');
+    var requestBody = {
+      username: username,
+      setname: "people",
+    };
+  
+    fetch(`http://192.168.50.7:8000/logout/${username}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+      keepalive: true,
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Response from server:', data);
+  
+      if (data.success) {
+        console.log(`用户 ${username} 退出成功，集合 ${requestBody.setname} 内已删除`);
+      } else {
+        console.error('用户退出失败:', data.message);
+    }
+    })
+    .catch(error => {
+        console.error('Error during login:', error);
+    });
+}
+
